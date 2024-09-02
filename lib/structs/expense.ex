@@ -27,8 +27,13 @@ defmodule Elixirtut.Structs.Expense do
     ]
   end
 
-  @spec total([t]) :: number()
+  @spec total([t()]) :: number()
   def total(expenses) do
     expenses |> Enum.reduce(0, fn  expense, acc -> expense.amount + acc  end)
+  end
+
+  @spec sort_by_date([t()]) :: [t()]
+  def sort_by_date(expenses) do
+    expenses |> Enum.sort_by(& &1.date)
   end
 end
