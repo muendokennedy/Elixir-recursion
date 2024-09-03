@@ -48,4 +48,24 @@ defmodule Elixirtut.Structs.Expense do
    new_item = %{item | amount: amount}
    [new_item | sample() |> List.delete(item)]
   end
+
+  # ------------------------- With ----------------------------------------
+
+  @users ["Kennedy", "John", "James", "Matthew"]
+
+  def authenticate(user) when user in @users, do: {:ok, "authorized"}
+  def authenticate(_), do: {:error, "unauthorized"}
+
+  def verify_password(user, _password) when user in @users, do: {:ok, "password verified"}
+  def verify_password(_user, _password), do: {:error, "wrong password"}
+
+  def login(user, password) do
+    with {:ok, _auth_message} <- authenticate(user),
+      {:ok, _message} <- verify_password(user, password) do
+        {:ok, "#{user} has logged in successfully"}
+      else
+        {:error, message} -> {:error, message}
+        _ -> :unauthorized
+      end
+    end
 end
